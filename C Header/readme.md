@@ -7,11 +7,33 @@
     * 完成最基礎輸出完整字串之puts()函式
 * scanf() :
     * 一次讀取一種輸入類型之輸入，並將其正確儲存 :
-        * char型態之輸出讀取 :
-        ```C
-        scanf("%c", &char_1);
-        ```
+        * char型態之輸入讀取 :
+            ```C
+            scanf("%c", &char_1);
+            ```
         * char *型態輸入之讀取 :
-        ```C
-        scanf("%s", &chars_1);
-        ```
+            ```C
+            scanf("%s", &chars_1);
+            ```
+        * int型態輸入之讀取 :
+            ```C
+            scanf("%d", &int_1);
+            ```
+        * char型態之省略空白輸入讀取 :
+            ```C
+            scanf(" %c", &char_1);
+            ```
+            實作 :
+            ```C
+            //其中temp為欲儲存的記憶體位置
+            if (requires[i - 2] == ' ') //若%c前面有空格，省略字串前面的任何空格, Tab鍵, enter鍵
+            {
+                while (input == ' ' || input == '\t' || input == '\n')
+                    input = getc(stdin);
+                *(char *)temp = input;
+            }
+            else
+                *(char *)temp = getc(stdin);
+            ```
+    * 一次讀取多種輸入類型之輸入 :
+        * 
