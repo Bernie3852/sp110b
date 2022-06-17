@@ -178,7 +178,7 @@ test.c為測試用範例程式
         }
     * 包含跳脫字元之輸出 :
         例如 :
-         ```C
+        ```C
         _scanf("%d %c %d", &int_1, &char_1, &int_2);
         //輸入 "10 : 30"
         printf("It\' %d%c%d AM \n Cool", int_1, char_1, int_2);
@@ -187,6 +187,7 @@ test.c為測試用範例程式
         "It is 10:30 AM
          Cool"
         */
+        ```
         實作 :
         ```C
         for (int i = 0; requires[i] != '\0'; ++i)
