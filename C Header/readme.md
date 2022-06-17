@@ -63,7 +63,7 @@
                             //char * 實作
                         case 'd':
                             int 實作
-                        default:            //輸入格式有誤
+                        default:        //輸入格式有誤
                             va_end(args);   //清理已使用完畢的參數
                             return 1;       //若不符合輸入規則則回傳1
                         }
@@ -73,3 +73,28 @@
                 return 0;  
             }
             ```
+        * 解決int型態輸入之特性
+            在int型態輸入有一特性，如果讀取數字時讀到非數字，會自動截斷
+            例如 :
+            ```C
+            scanf("%d%s", &int_1, chars_1);
+            //輸入 "123test"
+            printf("%d%s", int_1, chars_1):
+            //輸出為 "123est"
+            ```
+            由於%d預先讀到了't'
+            輸入流剩餘之內容為"est"
+            造成後續輸入錯誤
+            解決方法 :
+                在header裡面新增一全域變數INPUT_BUFF
+                並在每次讀取前先檢查該全域變數是否有內容
+                %c範例實作 :
+                ```C
+                if (INPUT_BUFF) //若暫存區內有已讀取的字元
+                {
+                    input = INPUT_BUFF;
+                    INPUT_BUFF = 0;
+                }
+                ```
+                在%s, %d也都有對應檢查之實作
+            
