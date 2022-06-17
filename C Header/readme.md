@@ -100,7 +100,7 @@ test.c為測試用範例程式
             在int型態輸入有一特性，如果讀取數字時讀到非數字，會自動截斷
             例如 :
             ```C
-            scanf("%d%s", &int_1, chars_1);
+            _scanf("%d%s", &int_1, chars_1);
             //輸入 "123test"
             printf("%d%s", int_1, chars_1):
             //輸出為 "123est"
@@ -120,4 +120,60 @@ test.c為測試用範例程式
                 }
                 ```
                 在%s, %d也都有對應檢查之實作  
-            
+* printf():
+    * 僅有單純字串之輸出 :
+        例如 :
+        ```C
+        printf("input words");
+        ```
+        基本上與puts()幾乎相同
+        實作 :
+        ```C
+        va_list args; //宣告參數列表
+        va_start(args, requires); //讀入第一個參數
+        for (int i = 0; requires[i] != '\0'; ++i)
+            putc(requires[i], stdout);
+        va_end(args); //清理已使用完畢的參數
+        ```
+    * 包含插入變數之輸出 :
+        例如 :
+        ```C
+        _scanf("It %s %d%c%d AM", chars_1, &int_1, &char_1, &int_2);
+        //輸入 "is 10 : 30"
+        printf("It %s %d%c%d AM", chars_1, int_1, char_1, int_2);
+        //輸出為 "It is 10:30 AM"
+        實作 :
+        ```C
+        for (int i = 0; requires[i] != '\0'; ++i)
+        {
+            if (requires[i] == '%')
+            {
+                char ch = 0;    //字元暫存
+                int in = 0;     //數字暫存
+                char *temp = 0; //字串暫存
+                switch (requires[++i])
+                {
+                case 'c':
+                    ch = (char)va_arg(args, int);
+                    putc(ch, stdout);
+                    break;
+                case 's':
+                    temp = (char *)va_arg(args, char *);
+                    _puts(temp);    //直接沿用_puts()輸出字串
+                    break;
+                case 'd':
+                    char *words = 0;
+                    in = (int)va_arg(args, int);
+                    words = int_to_words(in);   //int_to_words為將數字轉換為字串的函式，會動態規劃一個空間所以記得要free
+                    _puts(&words[words[0]]);    //直接沿用_puts()，words第0項儲存該數字串之起始index
+                    free(words);        //釋放int_to_words中動態規劃的空間
+                    break;
+                case '%':
+                    putc('%', stdout);
+                }
+            }
+            else
+                putc(requires[i], stdout);
+        }
+        ```
+        ```

@@ -209,7 +209,7 @@ int _scanf(const char requires[], ...) //目前僅支援%c, %s, %d的基本輸�
     return 0;
 }
 
-int _printf(const char requires[], ...) //目前僅支援%c, %s, %d的基本輸入，並支援常用跳脫字元，但不支援格式字元
+int _printf(const char requires[], ...) //目前僅支援%c, %s, %d的基本輸出，並支援常用跳脫字元，但不支援格式字元
 {
     va_list args; //宣告參數列表
 
@@ -219,9 +219,9 @@ int _printf(const char requires[], ...) //目前僅支援%c, %s, %d的基本輸�
     {
         if (requires[i] == '%')
         {
-            char ch = 0;
-            int in = 0;
-            void *temp = 0;
+            char ch = 0;    //字元暫存
+            int in = 0;     //數字暫存
+            char *temp = 0; //字串暫存
             switch (requires[++i])
             {
             case 'c':
@@ -230,14 +230,14 @@ int _printf(const char requires[], ...) //目前僅支援%c, %s, %d的基本輸�
                 break;
             case 's':
                 temp = (char *)va_arg(args, char *);
-                _puts((char *)temp);
+                _puts(emp);         //直接沿用_puts()輸出字串
                 break;
             case 'd':
                 char *words = 0;
                 in = (int)va_arg(args, int);
-                words = int_to_words(in);
-                _puts(&words[words[0]]);
-                free(words);
+                words = int_to_words(in);   //int_to_words為將數字轉換為字串的函式，會動態規劃一個空間所以記得要free
+                _puts(&words[words[0]]);    //直接沿用_puts()，words第0項儲存該數字串之起始index
+                free(words);        //釋放int_to_words中動態規劃的空間
                 break;
             case '%':
                 putc('%', stdout);
@@ -273,6 +273,8 @@ int _printf(const char requires[], ...) //目前僅支援%c, %s, %d的基本輸�
         else
             putc(requires[i], stdout);
     }
+    va_end(args); //清理已使用完畢的參數
+    return 0;
 }
 
 #endif
