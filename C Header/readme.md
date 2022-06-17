@@ -12,3 +12,6 @@
         scanf("%c", &char_1);
         ```
         * char *型態輸入之讀取 :
+        ```C
+        scanf("%s", &chars_1);
+        ```
