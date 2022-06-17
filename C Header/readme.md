@@ -138,7 +138,7 @@ test.c為測試用範例程式
     * 包含插入變數之輸出 :  
         例如 :
         ```C
-        _scanf("It %s %d%c%d AM", chars_1, &int_1, &char_1, &int_2);
+        _scanf("%s %d %c %d", chars_1, &int_1, &char_1, &int_2);
         //輸入 "is 10 : 30"
         printf("It %s %d%c%d AM", chars_1, int_1, char_1, int_2);
         //輸出為 "It is 10:30 AM"
@@ -176,5 +176,53 @@ test.c為測試用範例程式
             else
                 putc(requires[i], stdout);
         }
+    * 包含跳脫字元之輸出 :
+        例如 :
+         ```C
+        _scanf("%d %c %d", &int_1, &char_1, &int_2);
+        //輸入 "10 : 30"
+        printf("It\' %d%c%d AM \n Cool", int_1, char_1, int_2);
+        /*
+        輸出為
+        "It is 10:30 AM
+         Cool"
+        */
+        實作 :
         ```
+        for (int i = 0; requires[i] != '\0'; ++i)
+        {
+            if (requires[i] == '%')
+            {
+                //%實作
+            }
+            else if (requires[i] == '\\')
+            {
+                switch (requires[++i])
+                {
+                case '\'':
+                    putc('\'', stdout);
+                    break;
+                case '\"':
+                    putc('\"', stdout);
+                    break;
+                case '\\':
+                    putc('\\', stdout);
+                    break;
+                case '0':
+                    putc('\0', stdout);
+                    break;
+                case 't':
+                    putc('\t', stdout);
+                    break;
+                case 'n':
+                    putc('\n', stdout);
+                    break;
+                case 'b':
+                    putc('\b', stdout);
+                    break;
+                }
+            }
+            else
+                putc(requires[i], stdout);
+        }
         ```
