@@ -188,7 +188,7 @@ test.c為測試用範例程式
          Cool"
         */
         實作 :
-        ```
+        ```C
         for (int i = 0; requires[i] != '\0'; ++i)
         {
             if (requires[i] == '%')
