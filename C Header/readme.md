@@ -11,13 +11,33 @@
             ```C
             scanf("%c", &char_1);
             ```
+            實作 :
+            ```C
+            temp = (char *)va_arg(args, char *);    //要儲存的記憶體位置
+            *(char *)temp = getc(stdin);
+            ```
         * char *型態輸入之讀取 :
             ```C
             scanf("%s", &chars_1);
             ```
+            實作 :
+            ```C
+            temp = (char *)va_arg(args, char *);    //要儲存的記憶體位置
+            _gets_skip_blank((char *)temp);     //會省略字串前空格且以空格截斷版本之gets()
+            ```
         * int型態輸入之讀取 :
             ```C
             scanf("%d", &int_1);
+            ```
+            實作 :
+            ```C
+            temp = (int *)va_arg(args, int *);      //要儲存的記憶體位置
+            char inputs[13] = {};               //數字暫存
+            int index = _gets_number(inputs);       //會省略字串前空格且以非數字輸入截斷版本之gets()
+            if (index == -1)                    //錯誤的輸入格式處理, 以免記憶體錯誤
+                return 1;
+            *(int *)temp = words_to_int(inputs, index); //將char *型態數字轉為int型態之函式
+            break;
             ```
         * char型態之省略空白輸入讀取 :
             ```C

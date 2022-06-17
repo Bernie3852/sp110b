@@ -188,13 +188,13 @@ int _scanf(const char requires[], ...) //目前僅支援%c, %s, %d的基本輸�
                 break;
             case 's':
                 temp = (char *)va_arg(args, char *);
-                _gets_skip_blank((char *)temp);
+                _gets_skip_blank((char *)temp); //會省略字串前空格且以空格截斷版本之gets()
                 break;
             case 'd':
                 temp = (int *)va_arg(args, int *);
-                char inputs[13] = {};
-                int index = _gets_number(inputs);
-                if (index == -1)
+                char inputs[13] = {};   //數字暫存
+                int index = _gets_number(inputs);   //會省略字串前空格且以非數字輸入截斷版本之gets()
+                if (index == -1)        //錯誤的輸入格式處理, 以免記憶體錯誤
                     return 1;
                 *(int *)temp = words_to_int(inputs, index);
                 break;
