@@ -124,7 +124,7 @@ test.c為測試用範例程式
     * 僅有單純字串之輸出 :  
         例如 :
         ```C
-        printf("input words");
+        _printf("input words");
         ```
         基本上與puts()幾乎相同  
         實作 :
@@ -140,7 +140,7 @@ test.c為測試用範例程式
         ```C
         _scanf("%s %d %c %d", chars_1, &int_1, &char_1, &int_2);
         //輸入 "is 10 : 30"
-        printf("It %s %d%c%d AM", chars_1, int_1, char_1, int_2);
+        _printf("It %s %d%c%d AM", chars_1, int_1, char_1, int_2);
         //輸出為 "It is 10:30 AM"
         ```
         實作 :
@@ -181,7 +181,7 @@ test.c為測試用範例程式
         ```C
         _scanf("%d %c %d", &int_1, &char_1, &int_2);
         //輸入 "10 : 30"
-        printf("It\' %d%c%d AM \n Cool", int_1, char_1, int_2);
+        _printf("It\' %d%c%d AM \n Cool", int_1, char_1, int_2);
         /*
         輸出為
         "It is 10:30 AM
